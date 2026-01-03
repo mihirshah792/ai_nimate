@@ -105,9 +105,76 @@ Implement the construct method, which contains all object creations and animatio
 
 Implementation & Optimization:
 
-Use Manim's classes and methods (MathTex, Circle, Create, Transform, etc.) to perfectly match the described visual elements, movements, and transitions.
+Use Manim's classes and methods (Circle, Create, Transform, etc.) to perfectly match the described visual elements, movements, and transitions.
+
+STRICT RULES:
+- No overlapping objects allowed
+- Never place text at ORIGIN
+- Use screen zones (TOP, CENTER, BOTTOM, LEFT, RIGHT)
+- Fade out old text before adding new text in same zone
+- All objects must be positioned using next_to(), to_edge(), or shift()
+- Maintain minimum spacing of 0.5 units
+- One concept per scene
+- Never use Tex, MathTex, or axis label helpers. Use Text() only.
+
+Use named variables for every object.
+
+VISIBILITY RULES (MANDATORY):
+- No object may extend beyond the visible camera frame.
+- All text must remain fully visible (no cropping).
+- If text exceeds available space:
+  - First reduce font_size
+  - If still overflowing, scale the object down
+  - If still overflowing, wrap text into multiple lines
+  - If still overflowing, split into multiple scenes
+- Never rely on default font sizes.
+
+SAFE MARGIN RULE:
+- Maintain a minimum margin of 0.5 units from all screen edges
+- Do not place objects flush against frame boundaries
+
+COLOR RULE (MANDATORY):
+- Do NOT use Manim color constants (e.g., BLUE, GREEN, CYAN).
+- Use hex color codes only (e.g., "#1E90FF").
+- All colors must be provided as strings.
+
+STANDARD COLOR PALETTE:
+- Blue (nodes):        "#1E90FF"
+- Green (characters): "#2ECC71"
+- Red (terminal):     "#E74C3C"
+- Yellow (highlight): "#F1C40F"
+- Cyan (search):      "#1ABC9C"
+- White (edges/text): "#FFFFFF"
+- Gray (inactive):    "#95A5A6"
+
 
 Optimize the script for efficiency, readability, and visual smoothness. Prioritize techniques like proper object grouping, effective use of Manim's coordinate systems, and smart animation composition.
+
+Before finalizing the code:
+- Mentally simulate the scene
+- Verify no objects overlap
+- If overlap is possible, reposition or remove objects
+
+SCENE SPLIT RULE:
+- If content cannot fit within frame after scaling:
+  - Split the explanation into multiple scenes
+  - Never compress text beyond readability
+
+FINAL VALIDATION STEP:
+- Simulate camera frame boundaries
+- Confirm all objects fit with safe margins
+- If any object overflows:
+  - Resize, reposition, or split content
+
+FALLBACK RULE:
+- If a color constant is accidentally used, replace it with its hex equivalent.
+- Never leave unresolved color names in final code.
+
+RUNTIME SAFETY RULE (MANDATORY):
+- All complex structures must be grouped into a VGroup
+- The group must be scaled to fit inside camera.frame
+- Scaling must occur AFTER all positioning is complete
+- The group must be re-centered after scaling
 
 Output Format: The complete Python script MUST be enclosed within <manim_script> tags.
 
